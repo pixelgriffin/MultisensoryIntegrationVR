@@ -89,8 +89,8 @@ public class BallFlasher : MonoBehaviour {
         {
             if (doVibrateToggle.isOn)
             {
-                controllerA.TriggerHapticPulse(500);
-                controllerB.TriggerHapticPulse(500);
+                controllerA.TriggerHapticPulse(50000);
+                controllerB.TriggerHapticPulse(50000);
             }
 
             didVibrate = true;

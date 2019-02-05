@@ -15,11 +15,14 @@ public class BallBouncer : MonoBehaviour {
 
     public InputField secondsHitField;
     public InputField secondsSoundField;
+    public InputField ballDistance;
 
     private Vector3 leftStart, rightStart;
     private float ht, st;
     private bool playedSound = false;
     private bool play = false;
+
+    private float ballDist = 0f;
 
 	void Start () {
         secondsHitField.text = "" + 1;
@@ -45,6 +48,17 @@ public class BallBouncer : MonoBehaviour {
             timeToSound = 1f;
             secondsSoundField.text = "" + 1;
         }
+        if (!float.TryParse(ballDistance.text, out ballDist))
+        {
+            ballDist = 1f;
+            ballDistance.text = "" + 1;
+        }
+
+        leftStart = this.transform.position + new Vector3(-ballDist / 2f, ballDist / 2f, 0f);
+        rightStart = this.transform.position + new Vector3(ballDist / 2f, ballDist / 2f, 0f);
+
+        leftTo.localPosition = new Vector3(ballDist / 2f, -ballDist / 2f, 0f);
+        rightTo.localPosition = new Vector3(-ballDist / 2f, -ballDist / 2f, 0f);
 
         if (play)
         {

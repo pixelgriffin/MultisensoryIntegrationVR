@@ -1,0 +1,20 @@
+Repeat count:,4
+Test type count:,2
+Test 1,
+Rotation-X min,Rotation-X max
+0,360
+Rotation-Y min,Rotation-Y max
+0,360
+Rotation-Z min,Rotation-Z max
+0,360
+Distance min,Distance max
+2,4
+Test 2,
+Rotation-X min,Rotation-X max
+0,360
+Rotation-Y min,Rotation-Y max
+0,360
+Rotation-Z min,Rotation-Z max
+0,360
+Distance min,Distance max
+1,3

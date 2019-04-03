@@ -25,7 +25,7 @@ public class BallFlashUI
         didFlash = didSound = didVibrate = didEndFlash = false;
     }
 
-    public void Update(float timer, GameObject ball, AudioSource sound, Hand controllerA, Hand controllerB)
+    public bool Update(float timer, GameObject ball, AudioSource sound, Hand controllerA, Hand controllerB)
     {
         if (timer >= flashTime && !didFlash)
         {
@@ -55,12 +55,15 @@ public class BallFlashUI
         {
             if (vibrateToggle.isOn)
             {
-                controllerA.TriggerHapticPulse(50000);
-                controllerB.TriggerHapticPulse(50000);
-            }
+                //controllerA.TriggerHapticPulse(50000);
+                //controllerB.TriggerHapticPulse(50000);
+                didVibrate = true;
 
-            didVibrate = true;
+                return true;
+            }
         }
+
+        return false;
     }
 
     public void ValidateValues()
@@ -120,7 +123,13 @@ public class BallFlasher : MonoBehaviour {
             flash.ValidateValues();
 
         foreach (BallFlashUI flash in flashes)
-            flash.Update(timer, ball, sound, controllerA, controllerB);
+        {
+            if(flash.Update(timer, ball, sound, controllerA, controllerB))
+            {
+                StartCoroutine(LongVibration(controllerA, 0.15f, 1f));
+                StartCoroutine(LongVibration(controllerB, 0.15f, 1f));
+            }
+        }
     }
 
     public void Play()
@@ -131,4 +140,12 @@ public class BallFlasher : MonoBehaviour {
             flash.Reset();
     }
 
+    //length is how long the vibration should go for
+    //strength is vibration strength from 0-1
+    IEnumerator LongVibration(Hand hand, float length, float strength) {
+        for(float i = 0; i < length; i += Time.deltaTime) {
+            hand.TriggerHapticPulse((ushort)Mathf.Lerp(0, 3999, strength));
+            yield return null;
+        }
+    }
 }
